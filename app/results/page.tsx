@@ -74,9 +74,8 @@ export default function ResultsPage() {
             <h3 className="text-lg font-medium text-gray-900 mb-2">月均工资</h3>
             <p className="text-3xl font-bold text-green-600">
               ¥{results.length > 0
-                ? (results.reduce((sum, r) => sum + r.avg_salary, 0) / results.length)
-                  .toFixed(2)
-                  .toLocaleString('zh-CN')
+                ? ((results.reduce((sum, r) => sum + r.avg_salary, 0) / results.length)
+                  .toLocaleString('zh-CN', { minimumFractionDigits: 2 }))
                 : '0'}
             </p>
           </div>
@@ -84,9 +83,8 @@ export default function ResultsPage() {
             <h3 className="text-lg font-medium text-gray-900 mb-2">月均缴费</h3>
             <p className="text-3xl font-bold text-indigo-600">
               ¥{results.length > 0
-                ? (results.reduce((sum, r) => sum + r.company_fee, 0) / results.length)
-                  .toFixed(2)
-                  .toLocaleString('zh-CN')
+                ? ((results.reduce((sum, r) => sum + r.company_fee, 0) / results.length)
+                  .toLocaleString('zh-CN', { minimumFractionDigits: 2 }))
                 : '0'}
             </p>
           </div>
