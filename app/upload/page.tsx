@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { parseCitiesExcel, parseSalariesExcel } from '@/lib/excel-parser'
 import { calculateSocialSecurity } from '@/lib/calculator'
 import { City, Salary } from '@/types'
@@ -32,12 +32,13 @@ export default function UploadPage() {
     try {
       // 解析 Excel 文件
       const cities = await parseCitiesExcel(citiesFile)
+      const supabase = getSupabase()
 
       // 清空 cities 表
       const { error: deleteError } = await supabase
         .from('cities')
         .delete()
-        .neq('id', 0)
+        .neq('id', -1)
 
       if (deleteError) {
         throw deleteError
@@ -71,12 +72,13 @@ export default function UploadPage() {
     try {
       // 解析 Excel 文件
       const salaries = await parseSalariesExcel(salariesFile)
+      const supabase = getSupabase()
 
       // 清空 salaries 表
       const { error: deleteError } = await supabase
         .from('salaries')
         .delete()
-        .neq('id', 0)
+        .neq('id', -1)
 
       if (deleteError) {
         throw deleteError
@@ -121,12 +123,13 @@ export default function UploadPage() {
     setLoading(true)
     try {
       // 清空所有表
+      const supabase = getSupabase()
       const tables = ['cities', 'salaries', 'results']
       for (const table of tables) {
         const { error } = await supabase
           .from(table)
           .delete()
-          .neq('id', 0)
+          .neq('id', -1)
 
         if (error) {
           throw error

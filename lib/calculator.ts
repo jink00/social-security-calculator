@@ -1,7 +1,9 @@
-import { supabase } from './supabase'
+import { getSupabase } from './supabase'
 import { City, Salary, Result } from '@/types'
 
 export async function calculateSocialSecurity(): Promise<void> {
+  const supabase = getSupabase()
+
   try {
     // 1. 获取佛山的城市标准（默认2024年）
     const { data: cityData, error: cityError } = await supabase

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { Result } from '@/types'
 import Table from '@/components/Table'
 
@@ -19,6 +19,8 @@ export default function ResultsPage() {
   const fetchResults = async () => {
     try {
       setLoading(true)
+      const supabase = getSupabase()
+
       const { data, error } = await supabase
         .from('results')
         .select('*')
